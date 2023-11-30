@@ -36,6 +36,12 @@ public class RefreshTokenManager implements RefreshTokenService {
 	@Override
 	public RefreshToken createRefreshToken(Long userId) {
 
+		Optional<RefreshToken> existingToken = refreshTokenDao.findByUser_Id(userId);
+
+		if (existingToken.isPresent() && existingToken.get().getExpiryDate().compareTo(Instant.now()) >= 0) {
+			return existingToken.get();
+		}
+
 		cleanExpiredRefreshTokens();
 
 		RefreshToken refreshToken = new RefreshToken();

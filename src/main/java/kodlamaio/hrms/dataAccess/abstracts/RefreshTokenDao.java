@@ -17,4 +17,6 @@ public interface RefreshTokenDao extends JpaRepository<RefreshToken, Long> {
 	Long deleteByUser(User user);
 	
 	List<RefreshToken> findAllByExpiryDateBefore(Instant expiryDate);
+	
+	Optional<RefreshToken> findByUser_Id(Long userId);
 }
