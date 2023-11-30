@@ -1,5 +1,7 @@
 package kodlamaio.hrms.dataAccess.abstracts;
 
+import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +15,6 @@ public interface RefreshTokenDao extends JpaRepository<RefreshToken, Long> {
 
 	@Modifying
 	Long deleteByUser(User user);
+	
+	List<RefreshToken> findAllByExpiryDateBefore(Instant expiryDate);
 }

@@ -13,17 +13,13 @@ import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.ICoverLetterDao;
-import kodlamaio.hrms.dataAccess.abstracts.IJobPostingApplicationDao;
 import kodlamaio.hrms.entities.concretes.CoverLetter;
-import kodlamaio.hrms.entities.concretes.JobPostingApplication;
+
 @Service
 public class CoverLetterManager implements ICoverLetterService {
 
 	@Autowired
 	private ICoverLetterDao coverLetterDao;
-
-	@Autowired
-	private IJobPostingApplicationDao applicationDao;
 
 	@Override
 	public Result add(CoverLetter coverLetter) {
@@ -33,14 +29,6 @@ public class CoverLetterManager implements ICoverLetterService {
 
 	@Override
 	public Result delete(Long letterId) {
-
-		List<JobPostingApplication> applications = applicationDao.findByCoverLetter_LetterId(letterId);
-
-		for (JobPostingApplication application : applications) {
-			application.setCoverLetter(null);
-			applicationDao.save(application);
-		}
-
 		this.coverLetterDao.deleteById(letterId);
 		return new SuccessResult("Letter deleted.");
 	}

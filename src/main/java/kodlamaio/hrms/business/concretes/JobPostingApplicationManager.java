@@ -12,10 +12,8 @@ import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
-import kodlamaio.hrms.dataAccess.abstracts.ICoverLetterDao;
 import kodlamaio.hrms.dataAccess.abstracts.IJobPostingApplicationDao;
 import kodlamaio.hrms.dataAccess.abstracts.IResumeDao;
-import kodlamaio.hrms.entities.concretes.CoverLetter;
 import kodlamaio.hrms.entities.concretes.Employee;
 import kodlamaio.hrms.entities.concretes.JobPosting;
 import kodlamaio.hrms.entities.concretes.JobPostingApplication;
@@ -26,9 +24,6 @@ public class JobPostingApplicationManager implements IJobPostingApplicationServi
 
 	@Autowired
 	private IJobPostingApplicationDao applicationDao;
-
-	@Autowired
-	private ICoverLetterDao letterDao;
 
 	@Autowired
 	private IResumeDao resumeDao;
@@ -44,10 +39,6 @@ public class JobPostingApplicationManager implements IJobPostingApplicationServi
 
 		Resume resume = resumeDao.findById(jobPostingApplication.getResume().getResumeId()).orElseThrow();
 		jobPostingApplication.setResume(resume);
-
-		CoverLetter coverLetter = letterDao.findById(jobPostingApplication.getCoverLetter().getLetterId())
-				.orElseThrow();
-		jobPostingApplication.setCoverLetter(coverLetter);
 
 		this.applicationDao.save(jobPostingApplication);
 		return new SuccessResult("Application successful.");

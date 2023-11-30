@@ -17,7 +17,7 @@ public interface IJobPostingApplicationDao extends JpaRepository<JobPostingAppli
 	
 	List<JobPostingApplication> findByResume_ResumeId(Long resumeId);
 	
-	List<JobPostingApplication> findByCoverLetter_LetterId(Long letterId);
+	//List<JobPostingApplication> findByCoverLetter_LetterId(Long letterId);
 	
 	List<JobPostingApplication> findByEmployee_Id(Long employeeId);
 }

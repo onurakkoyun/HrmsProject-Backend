@@ -1,6 +1,7 @@
 package kodlamaio.hrms.business.concretes;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,6 +35,9 @@ public class RefreshTokenManager implements RefreshTokenService {
 
 	@Override
 	public RefreshToken createRefreshToken(Long userId) {
+
+		cleanExpiredRefreshTokens();
+
 		RefreshToken refreshToken = new RefreshToken();
 
 		refreshToken.setUser(userDao.findById(userId).get());
@@ -53,6 +57,11 @@ public class RefreshTokenManager implements RefreshTokenService {
 		}
 
 		return token;
+	}
+
+	private void cleanExpiredRefreshTokens() {
+		List<RefreshToken> expiredTokens = refreshTokenDao.findAllByExpiryDateBefore(Instant.now());
+		refreshTokenDao.deleteAll(expiredTokens);
 	}
 
 	@Transactional

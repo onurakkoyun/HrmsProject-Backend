@@ -52,8 +52,13 @@ public class JobPostingApplication {
 	@JoinColumn(name = "resume_id", referencedColumnName = "resume_id")
 	private Resume resume;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-	@JoinColumn(name = "letter_id", referencedColumnName = "letter_id")
-	private CoverLetter coverLetter;
+	@Column(name = "letter_id")
+	private Long letterId;
+	
+	@Column(name = "letter_name")
+	private String letterName;
+	
+	@Column(name = "letter_content")
+	private String letterContent;
 
 }
